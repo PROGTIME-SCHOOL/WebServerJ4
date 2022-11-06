@@ -89,7 +89,7 @@ namespace WebServerJ4
                 url += "index.html";   // /index.html
             }
 
-            string filePath = "www" + url;  // www/index.html
+            string filePath = @"www" + url;  // www/index.html
 
 
             // проверка сущетвования файла на сервере

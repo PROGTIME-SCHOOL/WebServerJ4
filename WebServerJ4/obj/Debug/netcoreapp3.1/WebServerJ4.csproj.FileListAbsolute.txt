@@ -1,0 +1,14 @@
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/obj/Debug/netcoreapp3.1/WebServerJ4.csproj.AssemblyReference.cache
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/obj/Debug/netcoreapp3.1/WebServerJ4.GeneratedMSBuildEditorConfig.editorconfig
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/obj/Debug/netcoreapp3.1/WebServerJ4.AssemblyInfoInputs.cache
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/obj/Debug/netcoreapp3.1/WebServerJ4.AssemblyInfo.cs
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/obj/Debug/netcoreapp3.1/WebServerJ4.csproj.CoreCompileInputs.cache
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/bin/Debug/netcoreapp3.1/WebServerJ4
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/bin/Debug/netcoreapp3.1/WebServerJ4.deps.json
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/bin/Debug/netcoreapp3.1/WebServerJ4.runtimeconfig.json
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/bin/Debug/netcoreapp3.1/WebServerJ4.runtimeconfig.dev.json
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/bin/Debug/netcoreapp3.1/WebServerJ4.dll
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/bin/Debug/netcoreapp3.1/WebServerJ4.pdb
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/obj/Debug/netcoreapp3.1/WebServerJ4.dll
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/obj/Debug/netcoreapp3.1/WebServerJ4.pdb
+/Users/viosagmir/Documents/GitHub/WebServerJ4/WebServerJ4/obj/Debug/netcoreapp3.1/WebServerJ4.genruntimeconfig.cache

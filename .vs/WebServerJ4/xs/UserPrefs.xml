@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{27FBAF3F-D269-4AC0-93A4-B9EABEC36DE2}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebServerJ4/bin/Debug/netcoreapp3.1/www/style.css">
+    <Files>
+      <File FileName="WebServerJ4/Program.cs" Line="8" Column="22" />
+      <File FileName="WebServerJ4/bin/Debug/netcoreapp3.1/www/index.html" Line="5" Column="63" />
+      <File FileName="WebServerJ4/bin/Debug/netcoreapp3.1/www/style.css" Line="8" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="WebServerJ4" expanded="True">
+            <Node name="WebServerJ4" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.WebServerJ4 PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>

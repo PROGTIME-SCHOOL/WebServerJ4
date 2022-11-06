@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace WebServerJ4
 {
@@ -76,12 +77,12 @@ namespace WebServerJ4
             // 127.0.0.1/12.jpg -> /12.jpg
             // 127.0.0.1/index.html -> /index.html
 
-            string url = "";
-            if (request.Contains("/"))
-            {
-                url = GetResourse(request);
-            }
+            string url = GetRequest(request);
+            // /
+            // /index.html
+            // /index.html?num=12
 
+            Console.WriteLine("URL: " + url);
 
 
             if (url == "/")  // 127.0.0.1 -> /
@@ -90,6 +91,8 @@ namespace WebServerJ4
             }
 
             string filePath = @"www" + url;  // www/index.html
+
+            
 
 
             // проверка сущетвования файла на сервере
@@ -134,8 +137,7 @@ namespace WebServerJ4
             // count - кол-во байтов из файлового потока
             count = fileStream.Read(buffer, 0, buffer.Length);
 
-            // [отправить вторую часть клиенту - body]
-            networkStream.Write(buffer, 0, count);
+            // [отправить вторую часть клиенту - body            networkStream.Write(buffer, 0, count);
 
             fileStream.Close();
             client.Close();
@@ -146,6 +148,15 @@ namespace WebServerJ4
         {
             string[] parts = request.Split();
             return parts[1];
+        }
+
+        public string GetRequest(string request)
+        {
+            Regex regex = new Regex(@"/\S*");
+
+            MatchCollection matchCollection = regex.Matches(request);
+
+            return matchCollection[0].Value;   // первое совпадение
         }
 
         public void SendError(TcpClient client, int code)

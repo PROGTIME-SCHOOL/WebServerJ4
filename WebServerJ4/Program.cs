@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace WebServerJ4
 {
@@ -84,6 +85,9 @@ namespace WebServerJ4
 
             Console.WriteLine("URL: " + url);
 
+            string page = "";      // index.html
+            string param = "";     // num=12
+
 
             if (url == "/")  // 127.0.0.1 -> /
             {
@@ -111,7 +115,6 @@ namespace WebServerJ4
                 contentType = "text/css";
             }
 
-
             // работа с файлом - создание потока чтения
             FileStream fileStream = new FileStream(filePath, FileMode.Open);
 
@@ -131,13 +134,20 @@ namespace WebServerJ4
 
             networkStream.Write(firstBytes, 0, firstBytes.Length);
 
-
-
             // работа с файловым потоком
             // count - кол-во байтов из файлового потока
-            count = fileStream.Read(buffer, 0, buffer.Length);
+            // count = fileStream.Read(buffer, 0, buffer.Length);
 
             // [отправить вторую часть клиенту - body            networkStream.Write(buffer, 0, count);
+            // Пока не достигнут конец файла
+            while (fileStream.Position < fileStream.Length)
+            {
+                // Читаем данные из файла
+                count = fileStream.Read(buffer, 0, buffer.Length);
+                // И передаем их клиенту
+                client.GetStream().Write(buffer, 0, count);
+            }
+
 
             fileStream.Close();
             client.Close();

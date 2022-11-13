@@ -72,11 +72,6 @@ namespace WebServerJ4
 
             Console.WriteLine(request);
 
-            // нужно получить url ресурса (адрес ресурса)
-            // ДОМАШНЕЕ ЗАДАНИЕ
-
-            // 127.0.0.1/12.jpg -> /12.jpg
-            // 127.0.0.1/index.html -> /index.html
 
             string url = GetRequest(request);
             // /
@@ -94,9 +89,31 @@ namespace WebServerJ4
                 url += "index.html";   // /index.html
             }
 
-            string filePath = @"www" + url;  // www/index.html
+            // для файла убираем параметры
+            if (url.Contains('?'))
+            {
+                string[] parts = url.Split('?');
+                page = parts[0];
+                param = parts[1];
+            }
+            else
+            {
+                page = url;
+            }
 
-            
+            string filePath = @"www" + page;  // www/index.html
+
+            // работа с параметром
+            int value = 0;
+            if (param != "")  // a=12
+            {
+                Regex regex = new Regex(@"\d+");
+                value = int.Parse(regex.Match(param).Value);
+
+                Square(client, value);
+                return;
+            }
+
 
 
             // проверка сущетвования файла на сервере
@@ -115,8 +132,9 @@ namespace WebServerJ4
                 contentType = "text/css";
             }
 
-            // работа с файлом - создание потока чтения
             FileStream fileStream = new FileStream(filePath, FileMode.Open);
+
+            #region Формируем начальную строку + заголовки
 
             string initLine = "HTTP/1.1 200 OK";
 
@@ -127,25 +145,17 @@ namespace WebServerJ4
 
             byte[] firstBytes = Encoding.UTF8.GetBytes(response_first);
 
+            #endregion
+
             // [отправить первую часть клиенту]
-
-            // получили поток для общения с клиентом
-            NetworkStream networkStream = client.GetStream();
-
+            NetworkStream networkStream = client.GetStream(); // получили поток для общения с клиентом
             networkStream.Write(firstBytes, 0, firstBytes.Length);
 
-            // работа с файловым потоком
-            // count - кол-во байтов из файлового потока
-            // count = fileStream.Read(buffer, 0, buffer.Length);
-
-            // [отправить вторую часть клиенту - body            networkStream.Write(buffer, 0, count);
-            // Пока не достигнут конец файла
-            while (fileStream.Position < fileStream.Length)
+            // [отправить вторую часть клиенту - body    
+            while (fileStream.Position < fileStream.Length) // Пока не достигнут конец файла
             {
-                // Читаем данные из файла
-                count = fileStream.Read(buffer, 0, buffer.Length);
-                // И передаем их клиенту
-                client.GetStream().Write(buffer, 0, count);
+                count = fileStream.Read(buffer, 0, buffer.Length); // Читаем данные из файла          
+                client.GetStream().Write(buffer, 0, count); // И передаем их клиенту
             }
 
 
@@ -198,6 +208,29 @@ namespace WebServerJ4
             string html = "<html> <b><i><font color = red> " +
                 "Hello from server! " +
                 "</font></i></b> </html>";
+
+            string response = "HTTP/1.1 200 OK\n" +
+                "Content-Type: text/html\n" +
+                "Content-Length: " + html.Length.ToString() +
+                "\n\n" + html;
+
+            byte[] bytes = Encoding.UTF8.GetBytes(response);
+
+            // получили поток для общения с клиентом
+            NetworkStream networkStream = client.GetStream();
+
+            networkStream.Write(bytes, 0, bytes.Length);
+
+            client.Close();
+        }
+
+        public void Square(TcpClient client, int value)
+        {
+            int res = value * value; // считаем квадрат
+
+            string html = "<html> <b><i><font color = red><h1> " +
+                res.ToString() +
+                "</h1></font></i></b> </html>";
 
             string response = "HTTP/1.1 200 OK\n" +
                 "Content-Type: text/html\n" +

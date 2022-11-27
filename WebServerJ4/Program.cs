@@ -6,6 +6,8 @@ using System.Threading;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using System.Collections.Generic;   // for dictionary
+using System.Linq;   // for collections
 
 namespace WebServerJ4
 {
@@ -77,6 +79,7 @@ namespace WebServerJ4
             // /
             // /index.html
             // /index.html?num=12
+            // http://127.0.0.1/math?n1=3&n2=2&n3=89
 
             Console.WriteLine("URL: " + url);
 
@@ -93,8 +96,8 @@ namespace WebServerJ4
             if (url.Contains('?'))
             {
                 string[] parts = url.Split('?');
-                page = parts[0];
-                param = parts[1];
+                page = parts[0];      // /math
+                param = parts[1];     // n1=3&n2=2&n3=89
             }
             else
             {
@@ -105,12 +108,44 @@ namespace WebServerJ4
 
             // работа с параметром
             int value = 0;
-            if (param != "")  // a=12
-            {
-                Regex regex = new Regex(@"\d+");
-                value = int.Parse(regex.Match(param).Value);
 
-                Square(client, value);
+            Dictionary<string, int> pairs = new Dictionary<string, int>();
+
+            if (param != "")  // a=12   // n1=3&n2=2&n3=89
+            {
+                Regex regex = new Regex(@"\w+=\w+");
+
+                var collection = regex.Matches(param);
+
+                foreach (Match item in collection)
+                {
+                    string text = item.Value;   // n1=3
+
+                    string nameParam = text.Split("=")[0];
+                    string valueParam = text.Split("=")[1];
+
+                    pairs.Add(nameParam, int.Parse(valueParam)); // заполнить словарь
+                }
+
+                //value = int.Parse(regex.Match(param).Value);
+
+                // Square(client, value);
+
+                // return;
+            }
+
+            // Сложение всех чисел в запросе
+            if (page.Contains("math"))
+            {
+                AddNumbers(client, pairs);
+
+                return;
+            }
+
+            if (page.Contains("sub"))   // вычитание
+            {
+                SubNumbers(client, pairs); // 4-3-2
+
                 return;
             }
 
@@ -208,6 +243,68 @@ namespace WebServerJ4
             string html = "<html> <b><i><font color = red> " +
                 "Hello from server! " +
                 "</font></i></b> </html>";
+
+            string response = "HTTP/1.1 200 OK\n" +
+                "Content-Type: text/html\n" +
+                "Content-Length: " + html.Length.ToString() +
+                "\n\n" + html;
+
+            byte[] bytes = Encoding.UTF8.GetBytes(response);
+
+            // получили поток для общения с клиентом
+            NetworkStream networkStream = client.GetStream();
+
+            networkStream.Write(bytes, 0, bytes.Length);
+
+            client.Close();
+        }
+
+        public void SubNumbers(TcpClient client, Dictionary<string, int> pairs)
+        {
+            // logic
+            // 5 2 = 
+
+            int res = pairs.First().Value;  // 5
+
+            foreach (var item in pairs)
+            {
+                res -= item.Value;
+            }
+
+            res += pairs.First().Value;
+
+
+            string html = "<html> <b><i><font color = red><h1> " +
+                res.ToString() +
+                "</h1></font></i></b> </html>";
+
+            string response = "HTTP/1.1 200 OK\n" +
+                "Content-Type: text/html\n" +
+                "Content-Length: " + html.Length.ToString() +
+                "\n\n" + html;
+
+            byte[] bytes = Encoding.UTF8.GetBytes(response);
+
+            // получили поток для общения с клиентом
+            NetworkStream networkStream = client.GetStream();
+
+            networkStream.Write(bytes, 0, bytes.Length);
+
+            client.Close();
+        }
+
+        public void AddNumbers(TcpClient client, Dictionary<string, int> pairs)
+        {
+            // logic
+            int res = 0;
+            foreach (var item in pairs)
+            {
+                res += item.Value;
+            }
+
+            string html = "<html> <b><i><font color = red><h1> " +
+                res.ToString() +
+                "</h1></font></i></b> </html>";
 
             string response = "HTTP/1.1 200 OK\n" +
                 "Content-Type: text/html\n" +

@@ -15,7 +15,7 @@ input[type=text] {
     border-radius: 15px;
 }
 
-input[type=button] {
+input[type=submit] {
     background-color: darkgray;
     color: white;
     padding: 10px;
@@ -25,10 +25,10 @@ input[type=button] {
     cursor: pointer;
 }
 
-input[type=button]:hover {
-    background-color: darkslategray;
-}
+    input[type=submit]:hover {
+        background-color: darkslategray;
+    }
 
-input[type=button]:active {
-    background-color: red;
-}
+    input[type=submit]:active {
+        background-color: red;
+    }

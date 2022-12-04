@@ -135,7 +135,7 @@ namespace WebServerJ4
             }
 
             // Сложение всех чисел в запросе
-            if (page.Contains("math"))
+            if (page.Contains("calc"))
             {
                 AddNumbers(client, pairs);
 
@@ -297,14 +297,28 @@ namespace WebServerJ4
         {
             // logic
             int res = 0;
+            string string_res = "";
             foreach (var item in pairs)
             {
                 res += item.Value;
+                string_res += item.Value.ToString() + " + ";
             }
+            string_res = string_res.Remove(string_res.Length - 3);
+            string_res += " = " + res.ToString();
 
-            string html = "<html> <b><i><font color = red><h1> " +
+            // взять страницу с сервера и обработать ее
+            StreamReader reader = new StreamReader("www/math.html");
+
+            string page = reader.ReadToEnd();
+
+            page = page.Replace("@value", string_res);
+
+
+            /*string html = "<html> <b><i><font color = red><h1> " +
                 res.ToString() +
-                "</h1></font></i></b> </html>";
+                "</h1></font></i></b> </html>";*/
+
+            string html = page;
 
             string response = "HTTP/1.1 200 OK\n" +
                 "Content-Type: text/html\n" +
